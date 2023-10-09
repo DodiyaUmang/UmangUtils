@@ -1,0 +1,36 @@
+ private void loadData() {
+        // method to load arraylist from shared prefs
+        // initializing our shared prefs with name as 
+        // shared preferences.
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+         
+        // creating a variable for gson.
+        Gson gson = new Gson();
+          
+        // below line is to get to string present from our 
+        // shared prefs if not present setting it as null.
+        String json = sharedPreferences.getString("courses", null);
+          
+        // below line is to get the type of our array list.
+        Type type = new TypeToken<ArrayList<CourseModal>>() {}.getType();
+          
+        // in below line we are getting data from gson 
+        // and saving it to our array list
+        courseModalArrayList = gson.fromJson(json, type);
+          
+        // checking below if the array list is empty or not
+        if (courseModalArrayList == null) {
+            // if the array list is empty
+            // creating a new array list.
+            courseModalArrayList = new ArrayList<>();
+        }
+    }
+  
+   private void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(parse);
+        editor.putString("MainResponceList", json);
+        editor.apply();
+    }
